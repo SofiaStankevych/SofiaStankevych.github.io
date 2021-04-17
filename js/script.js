@@ -82,4 +82,97 @@ document.addEventListener('DOMContentLoaded', function(){
        }
     });
 
+/*
+    const now = new Date();
+    console.log(now.getFullYear());
+    console.log(now);
+    console.log(now.getYear());
+    console.log(now.getMonth()+1);
+    console.log(now.getDay()+1);
+    now.setMonth(4);
+    console.log(now); */
+
+    const deadline = '2021-05-11'
+    
+
+
+    function getTimeRemain(deadline){
+
+        endDate = new Date(Date.parse(deadline));
+        const now = new Date();
+        
+        const t = endDate - now;
+        console.log(t);
+
+        const days = Math.floor(t/1000/60/60/24);
+        const hours = Math.floor(t/1000/60/60)%24;
+        const minutes = Math.floor((t/1000/60)%60);
+        const seconds = Math.floor((t/1000)%60);
+
+        return {
+            'days' : days,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds,
+            'total': t
+        };
+    }
+    function setClock(endtime){
+        const timer = document.querySelector('.timer'),
+                days = document.getElementById('days'),
+                hours = document.getElementById('hours'),
+                minutes = document.getElementById('minutes'),
+                seconds = document.getElementById('seconds');
+            
+                
+                updateClock();
+
+                let timerUpdate = setInterval(updateClock, 1000);
+
+        function updateClock(){
+            const newTime = getTimeRemain(endtime);
+            days.innerHTML = newTime.days;
+            hours.innerHTML = newTime.hours;
+            minutes.innerHTML = newTime.minutes;
+            seconds.innerHTML = newTime.seconds;
+        
+            if (newTime.total<=0){
+                clearInterval(timerUpdate);
+
+            }
+        
+        }
+
+    
+    }           
+    
+    setClock(deadline);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  });
