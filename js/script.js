@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function(){
    
    const timerTabs = setInterval(changeTab, 5000);
    
-
+/* modalne vikno*/
    const modalBtns = document.querySelectorAll('button[data-modal]'),
          modal = document.querySelector('.modal'),
          closeBtn = document.querySelector('.modal__close');
@@ -87,10 +87,92 @@ document.addEventListener('DOMContentLoaded', function(){
    });
 
 
-   const deadline = '2021-05-11';
+   /*VALIDACIA FORMY*/
+   const forms = document.querySelectorAll('form'); 
+         
 
 
+   forms.forEach(function(form){
+
+      const inputs = form.querySelectorAll('input');
+      inputs.forEach(function(input){
+         input.addEventListener('input', function(){
+            if (input.getAttribute('type') == 'email'){
+               if (!validateEmail(input.value)){
+                  addErrorMessage(input, 'Введіть правильний email')
+               }else{
+                  removeErrorMessage(input);
+               }
+            } else if (input.getAttribute('type') == 'phone'){
+               if (!validatePhone(input.value)){
+                  addErrorMessage(input, 'Введіть правильний номер телефону')
+               }else{
+                  removeErrorMessage(input);
+               }
+            } else if (input.getAttribute('type') == 'text'){
+               if (!validateName(input.value)){
+                  addErrorMessage(input, "Введіть правильне ім'я");
+               }else{
+                  removeErrorMessage(input);
+               }
+            }
+         });
+      });
+
+      
+      form.addEventListener('submit', function(){
+         // postData();
+      });
+   });
+
+   function validateEmail(inputEmail){
+      return /\S+@\S+\.\S+/.test(inputEmail);
+   }
+
+   function validatePhone(inputPhone){
+
+      return /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/.test(inputPhone);
+
+      //return ^\\+[\\(\\-]?(\\d[\\(\\)\\-]?){11}\\d$.test(inputPhone);
+      //return (inputPhone.matches("^\\+[\\(\\-]?(\\d[\\(\\)\\-]?){11}\\d$") ||
+      //inputPhone.matches("^\\(?(\\d[\\-\\(\\)]?){9}\\d$")) &&
+      //inputPhone.matches("[\\+]?\\d*(\\(\\d{3}\\))?\\d*\\-?\\d*\\-?\\d*\\d$");
+   }
+
+   function validateName(inputName){
+      //return /^[a-zа-яа-я]{2,16}$/.test(inputName);
+      return /^([А-Я]{1}[а-яії]{1,23}|[A-Z]{1}[a-z]{1,23})$/.test(inputName);
+
+   }
+   function addErrorMessage(input, message){
+      if (input.nextElementSibling.classList.contains('error_label')){
+         return;
+      }
+      
+      input.classList.add('error');
+      const messageError = document.createElement('p');
+                  messageError.style.textAlign = 'center';
+                  messageError.classList.add('error_label');
+                  messageError.textContent = message;
+                  input.after(messageError);
+   }
+   function removeErrorMessage(input){
+      input.classList.remove('error');
+      if (input.nextElementSibling.classList.contains('error_label')){
+          input.nextElementSibling.remove();
+      }
+   }
+
+
+
+
+   const deadline = '2021-03-11';
+
+   
    function getTimeRemain(deadline){
+      
+
+
       endDate = Date.parse(deadline);
       const now = new Date(),
             t = endDate - now;
@@ -123,17 +205,34 @@ document.addEventListener('DOMContentLoaded', function(){
             let timerUpdate = setInterval(updateClock, 1000);
 
       function updateClock(){
-         const newTime = getTimeRemain(endtime);
+         try {
+            const newTime = getTimeRemain(endtime);
          
-         days.innerHTML = newTime.days;
-         hours.innerHTML = newTime.hours;
-         minutes.innerHTML = newTime.minutes;
-         seconds.innerHTML = newTime.seconds;
+            days.innerHTML = newTime.days;
+            hours.innerHTML = newTime.hours;
+            minutes.innerHTML = newTime.minutes;
+            seconds.innerHTML = newTime.seconds;
 
-         if (newTime.total<=0){
-            clearInterval(timerUpdate);
-
+            if (newTime.total<=0){
+               
+               days.innerHTML = '00';
+               hours.innerHTML = '00';
+               minutes.innerHTML ='00';
+               seconds.innerHTML = '00';
+               clearInterval(timerUpdate);
+            }   
+         } catch (error) {
+            console.log(error);
+            let endMessage = document.createElement('h3');
+            endMessage.textContent = 'Акція вже закінчилась';
+            
+            endMessage.style.marginTop = '20px';
+            
+            timer.after(endMessage);
+         
          }
+         
+         
       }
    }
 
