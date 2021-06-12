@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
       const inputs = form.querySelectorAll('input');
       inputs.forEach(function(input){
-         input.addEventListener('input', function(){
+         input.addEventListener('change', function(){
             if (input.getAttribute('type') == 'email'){
                if (!validateEmail(input.value)){
                   addErrorMessage(input, 'Введіть правильний email')
@@ -163,7 +163,17 @@ document.addEventListener('DOMContentLoaded', function(){
       }
    }
 
+   //------------
 
+   const user = {
+      name: 'John',
+      surname: 'Watson',
+      age: 40
+   };
+   
+
+
+   //------
 
 
    const deadline = '2021-03-11';
@@ -382,7 +392,6 @@ function getStaticInformation(parentSelector, activeClass){
    });
 
 }
-
 getStaticInformation('#gender','calculating__choose-item_active');
 getStaticInformation('.calculating__choose_big','calculating__choose-item_active');
 
@@ -413,7 +422,62 @@ getDynamicInformation('#weight');
 getDynamicInformation('#age');
 
 
+ /* Загрузка меню */
+/*
+ fetch("http://localhost:3000/menu")
+ .then((response) => {
+   return response.json();
+ })
+ .then((menuData) => {
+   console.log(menuData);
 
+   const menuList = document.querySelector(".menu__field .container");
+
+   menuList.innerHTML = "";
+
+   menuData.forEach(function (menuItem) {
+     let menuDiv = document.createElement("div");
+
+     menuDiv.classList.add("menu__item");
+     menuDiv.innerHTML = `<img src=${menuItem.img}  alt="vegy">
+                     <h3 class="menu__item-subtitle"> ${menuItem.title} </h3>
+                     <div class="menu__item-descr"> ${menuItem.desc} </div>
+                     <div class="menu__item-divider"></div>
+                     <div class="menu__item-price">
+                     <div class="menu__item-cost">Ціна:</div>
+                     <div class="menu__item-total"><span> ${menuItem.price} </span> грн/день</div>
+                     </div>`;
+      menuList.append(menuDiv);
+   });
+ });
+
+/* Надсилання форми 
+const formSubmitted = document.querySelectorAll("form");
+
+async function postData(url, data){
+ 
+ let res =  await fetch(url, {
+     method: 'POST', // или 'PUT'
+     body: data, // данные могут быть 'строкой' или {объектом}!
+     headers: {
+       'Content-Type': 'application/json'
+     }
+   })
+   return await res.json();
+}
+
+*//*
+const formIframe = document.querySelector("#hidden_iframe");
+formIframe.onload(function(){
+   if(submitted){
+      document.querySelector('.modal form').style.display = 'none';
+      document.querySelector('.modal__content').innerHTML='';   
+
+   }
+
+
+});
+*/
 
 
 
@@ -423,3 +487,8 @@ getDynamicInformation('#age');
 
 
 });
+
+
+
+
+

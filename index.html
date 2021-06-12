@@ -232,12 +232,12 @@
     <div class="order">
         <div class="container">
             <div class="title">Замовляй пробний день прямо зараз!</div>
-            <form action="#" class="order__form">
+            <form  class="order__form">
                 <input  placeholder="Ваше ім'я" name="name" type="text" class="order__input">
                 <input  placeholder="Ваш email" name="email" type="email" class="order__input">
                 <input  placeholder="Ваш номер телефону" name="phone" type="phone" class="order__input">
                 <img src="icons/right.svg" alt="right">
-                <button class="btn btn_dark btn_min">Передзвонити мені</button>
+                <button type="submit" class="btn btn_dark btn_min">Передзвонити мені</button>
             </form>
         </div>
     </div>
@@ -301,14 +301,18 @@
     <div class="modal">
         <div class="modal__dialog">
             <div class="modal__content">
-                <form action="#">
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){
+                    document.querySelector('.modal form').style.display = 'none';
+                    document.querySelector('.modal__content').innerHTML='<h3>Дякуємо. Ми вам зателефонуємо!</h3>';
+                   }"></iframe>
+                <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSc0rSPD-LbiVXxfDv_n-KUf4YEVt7j6469pkrdiV_qpN2BnGg/formResponse" target="hidden_iframe"target="hidden_iframe"  onsubmit="submitted=true;">
                     <div class="modal__close">&times;</div>
                     <div class="modal__title">Ми зв'яжемося з вами як можна швидше!</div>
-                    <input required placeholder="Ваше имя" name="name" type="text" class="modal__input">
-                    <input  placeholder="Ваш email" name="email" type="email" class="modal__input">
+                    <input required placeholder="Ваше имя" name="entry.1024811974" type="text" class="modal__input">
+                    <input  placeholder="Ваш email" name="entry.1761533264" type="email" class="modal__input">
 
-                    <input required placeholder="Ваш номер телефона" name="phone" type="phone" class="modal__input">
-                    <button class="btn btn_dark btn_min">Передзвонити мені</button>
+                    <input required placeholder="Ваш номер телефона" name="entry.2078317872" type="phone" class="modal__input">
+                    <button type="submit" class="btn btn_dark btn_min">Передзвонити мені</button>
                 </form>
             </div>
         </div>
